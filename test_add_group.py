@@ -8,14 +8,22 @@ from selenium.common.exceptions import NoAlertPresentException
 import unittest, time, re
 
 
-class TestAddGroup(unittest.TestCase):
+def is_alert_present(self):
+    try:
+        self.wd.switch_to_alert()
+    except NoAlertPresentException as e:
+        return False
+    return True
+
+
+class test_add_group(unittest.TestCase):
     def setUp(self):
         self.wd = webdriver.Firefox()
         self.wd.implicitly_wait(30)
 
     def test_add_group(self):
         wd = self.wd
-        wd.get("http://localhost/addressbook/")
+        wd.get("http://localhost:8080/addressbook/")
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys("admin")
@@ -41,11 +49,7 @@ class TestAddGroup(unittest.TestCase):
         try: self.wd.find_element(by=how, value=what)
         except NoSuchElementException as e: return False
         return True
-    
-    def is_alert_present(self):
-        try: self.wd.switch_to_alert()
-        except NoAlertPresentException as e: return False
-        return True
+
     
     def tearDown(self):
         self.wd.quit()
