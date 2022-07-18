@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest
 
@@ -124,11 +123,6 @@ class test_add_contact(unittest.TestCase):
                                         email="asd", email2="asd", email3="asd", homepage="asd", byear="1111",
                                         ayear="2222", address2="asdf", phone2="asdf", notes="asdf"))
         self.logout(wd)
-
-    def is_element_present(self, how, what):
-        try: self.wd.find_element(by=how, value=what)
-        except NoSuchElementException as e: return False
-        return True
 
     def tearDown(self):
         self.wd.quit()
