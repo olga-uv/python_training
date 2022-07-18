@@ -26,6 +26,7 @@ class test_add_contact(unittest.TestCase):
         wd.get("http://localhost:8080/addressbook/")
 
     def login(self, wd, username, password):
+        self.open_home_page(wd)
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
@@ -37,6 +38,7 @@ class test_add_contact(unittest.TestCase):
         wd.find_element_by_link_text("add new").click()
 
     def create_contact(self, wd, contact):
+        self.open_add_new_contact_page(wd)
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
         wd.find_element_by_name("firstname").send_keys(contact.firstname)
@@ -106,6 +108,7 @@ class test_add_contact(unittest.TestCase):
         wd.find_element_by_name("notes").clear()
         wd.find_element_by_name("notes").send_keys(contact.notes)
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.return_to_home_page(wd)
 
     def return_to_home_page(self, wd):
         wd.find_element_by_link_text("home").click()
@@ -115,14 +118,11 @@ class test_add_contact(unittest.TestCase):
 
     def test_add_contact(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
-        self.open_add_new_contact_page(wd)
         self.create_contact(wd, Contact(firstname="asd", middlename="asd", lastname="asd", nickname="asd", title="asd",
                                         company="asd", address="asd", home="asd", mobile="asd", work="asd", fax="asd",
                                         email="asd", email2="asd", email3="asd", homepage="asd", byear="1111",
                                         ayear="2222", address2="asdf", phone2="asdf", notes="asdf"))
-        self.return_to_home_page(wd)
         self.logout(wd)
 
     def is_element_present(self, how, what):
