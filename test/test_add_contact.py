@@ -11,3 +11,5 @@ def test_add_contact(app):
                                homepage="site", address2="adr", phone2="phone", notes="notes"))
     new_contacts = app.contact.get_contacts_list()
     assert len(old_contacts) + 1 == len(new_contacts)
+
+
